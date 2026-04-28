@@ -131,10 +131,10 @@ export default function Home() {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center fade-in stagger-4">
             <a href="#projects" className="px-8 py-4 bg-cyan-500/20 border border-cyan-500/50 rounded-full hover:bg-cyan-500/30 neon-glow transition-all">
-              View my work
+              Voir mon travail
             </a>
             <a href="#contact" className="px-8 py-4 glass rounded-full hover:border-cyan-500/50 transition-all">
-              Hire me
+              Me recruter
             </a>
           </div>
         </div>
@@ -149,7 +149,7 @@ export default function Home() {
       <section id="about" className="min-h-screen flex items-center py-32 px-6">
         <div className="max-w-6xl mx-auto w-full">
           <h2 className="text-4xl md:text-5xl font-bold text-center mb-16">
-            <span className="gradient-text">About Me</span>
+            <span className="gradient-text">À propos de moi</span>
           </h2>
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div className="glass p-8 rounded-2xl">
@@ -169,7 +169,7 @@ export default function Home() {
           </div>
           <div className="mt-12 glass p-8 rounded-2xl text-center">
             <div className="text-5xl font-bold gradient-text mb-2">3</div>
-            <p className="text-xl">Projects Completed</p>
+            <p className="text-xl">Projets terminés</p>
           </div>
         </div>
       </section>
@@ -178,7 +178,7 @@ export default function Home() {
       <section id="projects" className="min-h-screen py-32 px-6">
         <div className="max-w-6xl mx-auto">
           <h2 className="text-4xl md:text-5xl font-bold text-center mb-16">
-            <span className="gradient-text">Projects</span>
+            <span className="gradient-text">Projets</span>
           </h2>
           <div className="grid md:grid-cols-3 gap-6">
             {projects.map((project, index) => (
@@ -211,7 +211,7 @@ export default function Home() {
       <section id="skills" className="min-h-screen py-32 px-6">
         <div className="max-w-4xl mx-auto">
           <h2 className="text-4xl md:text-5xl font-bold text-center mb-16">
-            <span className="gradient-text">Skills</span>
+            <span className="gradient-text">Compétences</span>
           </h2>
           <div className="grid md:grid-cols-2 gap-6">
             {skills.map((skill) => (
@@ -261,10 +261,10 @@ export default function Home() {
       <section id="contact" className="min-h-screen py-32 px-6 flex items-center">
         <div className="max-w-4xl mx-auto w-full text-center">
           <h2 className="text-4xl md:text-5xl font-bold mb-8">
-            <span className="gradient-text">Get In Touch</span>
+            <span className="gradient-text">Entrer en contact</span>
           </h2>
           <p className="text-gray-400 mb-12 max-w-2xl mx-auto">
-            I'm always open to discussing new projects, creative ideas, or opportunities to be part of your visions.
+            Je suis toujours ouvert à la discussion de nouveaux projets, d'idées créatives ou d'opportunités de contribuer à vos visions.
           </p>
           <div className="grid md:grid-cols-4 gap-6 mb-12">
             <a href="mailto:salljunior439@gmail.com" className="glass p-6 rounded-2xl card-hover group">
@@ -293,7 +293,7 @@ export default function Home() {
             </a>
           </div>
           <a href="mailto:salljunior439@gmail.com" className="inline-block px-10 py-4 bg-cyan-500/20 border border-cyan-500/50 rounded-full hover:bg-cyan-500/30 neon-glow transition-all text-lg">
-            Let's work together →
+            Travaillons ensemble →
           </a>
         </div>
       </section>
@@ -301,8 +301,7 @@ export default function Home() {
       {/* Footer */}
       <footer className="py-8 px-6 border-t border-white/10">
         <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-gray-500 text-sm">© 2024 Saliou Sall. All rights reserved.</p>
-          <p className="text-gray-500 text-sm">Built with React, Next.js & Tailwind</p>
+          <p className="text-gray-500 text-sm">© 2024 Saliou Sall. Tous droits réservés.</p>
         </div>
       </footer>
     </div>
