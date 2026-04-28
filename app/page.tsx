@@ -102,7 +102,7 @@ export default function Home() {
 
         {/* Mobile menu */}
         {mobileMenuOpen && (
-          <div className="md:hidden glass mt-4 mx-6 rounded-2xl p-6 h-screen flex justify-center items-center">
+          <div className="md:hidden glass mt-4 mx-6 rounded-2xl p-6 h-[90vh] flex justify-center items-center">
             <div className="flex flex-col gap-5">
               {navItems.map((item) => (
                 <a 
