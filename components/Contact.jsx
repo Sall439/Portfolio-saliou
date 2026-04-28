@@ -1,5 +1,6 @@
 import React, { useRef, useState } from 'react';
 import emailjs from '@emailjs/browser';
+import { toast } from 'react-toastify';
 
 export default function Contact() {
   const form = useRef(null);
@@ -20,12 +21,12 @@ export default function Contact() {
       process.env.NEXT_PUBLIC_PUBLIC_KEY 
     )
     .then(() => {
-      alert("Message envoyé avec succès !");
+      toast.success("Message envoyé avec succès !");
       form.current?.reset();
     })
     .catch((error) => {
       console.error("Erreur EmailJS:", error);
-      alert("Une erreur est survenue.");
+      toast.error("Une erreur est survenue.");
     })
     .finally(() => setIsSending(false));
   };
