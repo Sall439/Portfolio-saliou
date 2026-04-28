@@ -26,6 +26,7 @@ const projects = [
     tech: ['React Native', 'Node.js', 'MongoDB', 'Expo'],
     color: 'from-blue-500 to-indigo-500',
     link: '#',
+    // src: '/assets/template.png'
   },
 ];
 
@@ -70,7 +71,7 @@ export default function Home() {
       </div>
 
       {/* Navigation */}
-      <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled ? 'glass py-4' : 'py-6'}`}>
+      <nav className={`fixed top-0 left-0 right-0 z-50 bg-[#03090f] transition-all duration-500 ${scrolled ? 'glass scrolled py-4' : 'py-6'}`}>
         <div className="max-w-6xl mx-auto px-6 flex justify-between items-center">
           <a href="#home" className="text-2xl font-bold text-glow">SS</a>
           
