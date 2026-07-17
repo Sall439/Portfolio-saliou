@@ -8,4 +8,6 @@ export const skills = [
   { name: 'CSS', level: 90 },
   { name: 'JavaScript', level: 88 },
   { name: 'Tailwind CSS', level: 75 },
+  { name: 'Laravel API', level: 75 },
+  { name: 'Django', level: 60 },
 ] as const;
