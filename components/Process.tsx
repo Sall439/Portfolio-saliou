@@ -1,29 +1,59 @@
-import { process as processData } from '@/data/process';
+"use client";
+
+import { motion, useReducedMotion } from "motion/react";
+import { processSteps } from "@/data/process";
+import { Section, SectionHeading } from "@/components/ui/Section";
+
+const EASE = [0.16, 1, 0.3, 1] as const;
 
 export default function Process() {
+  const reduce = useReducedMotion();
+
   return (
-    <section id="process" className="min-h-screen py-32 px-6">
-      <div className="max-w-6xl mx-auto">
-        <h2 className="text-4xl md:text-5xl font-bold text-center mb-16">
-          <span className="gradient-text">Process</span>
-        </h2>
-        <div className="grid md:grid-cols-4 gap-6">
-          {processData.map((p, index) => (
-            <div key={p.step} className="glass p-6 rounded-2xl text-center card-hover relative">
-              <div className="text-4xl font-bold gradient-text mb-4">{p.step}</div>
-              <h3 className="text-xl font-bold mb-2">{p.title}</h3>
-              <p className="text-gray-400 text-sm">{p.description}</p>
-              {index < processData.length - 1 && (
-                <div className="hidden md:block absolute right-0 top-1/2 -translate-y-1/2 translate-x-full">
-                  <svg className="w-8 h-8 text-cyan-500/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                  </svg>
-                </div>
-              )}
+    <Section id="process">
+      <SectionHeading
+        index="04"
+        label="Process"
+        title={
+          <>
+            Une méthode simple, <span className="italic">répétée</span> à chaque
+            projet.
+          </>
+        }
+      />
+
+      <ol className="mt-14 grid grid-cols-1 gap-px overflow-hidden border border-hair bg-hair sm:grid-cols-2 lg:mt-16 lg:grid-cols-4">
+        {processSteps.map((step, index) => (
+          <li key={step.step} className="bg-ink">
+            {/* Hairline that draws itself in on scroll */}
+            <div className="relative h-px w-full bg-hair">
+              <motion.div
+                className="absolute inset-0 origin-left bg-bone/40"
+                initial={{ scaleX: reduce ? 1 : 0 }}
+                whileInView={{ scaleX: 1 }}
+                viewport={{ once: true, amount: 0.6 }}
+                transition={{ duration: 1, delay: index * 0.1, ease: EASE }}
+              />
             </div>
-          ))}
-        </div>
-      </div>
-    </section>
+
+            <motion.div
+              initial={reduce ? false : { opacity: 0, y: 14 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.4 }}
+              transition={{ duration: 0.7, delay: index * 0.1, ease: EASE }}
+              className="p-7 sm:p-8"
+            >
+              <span className="text-xs text-ash-dim tabular-nums">{step.step}</span>
+
+              <h3 className="mt-5 text-lg text-bone">{step.title}</h3>
+
+              <p className="mt-3 text-sm leading-relaxed text-ash">
+                {step.description}
+              </p>
+            </motion.div>
+          </li>
+        ))}
+      </ol>
+    </Section>
   );
 }

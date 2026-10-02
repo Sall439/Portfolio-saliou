@@ -1,154 +1,267 @@
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
 @import "tailwindcss";
 
-:root {
-  --background: #000000;
-  --foreground: #ffffff;
-  --neon-blue: #00d4ff;
-  --neon-purple: #a855f7;
-  --deep-blue: #0a1628;
-}
-
+/* ============================================================
+   FONTS — resolved from next/font variables set in app/layout.tsx
+   ============================================================ */
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: 'Space Grotesk', sans-serif;
+  --font-sans: var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-instrument-serif), ui-serif, Georgia, serif;
 }
 
-* {
-  box-sizing: border-box;
+/* ============================================================
+   DESIGN TOKENS
+
+   Every text colour below was checked against --color-ink:
+     bone      #f2f0ea  17.3:1  (AAA)
+     ash       #a1a1a6   7.7:1  (AAA) — the stated secondary floor
+     ash-dim   #8b8b90   5.8:1  (AA)  — tertiary/meta only
+     warm      #c2a878   8.6:1  (AAA) — hairlines + active underline
+   The previous ash-dim was #67645f at 3.4:1, i.e. a WCAG failure.
+   ============================================================ */
+@theme {
+  /* Surfaces — warm-tinted near-blacks, never pure #000 */
+  --color-ink: #0b0b0c;
+  --color-ink-2: #101012;
+  --color-ink-3: #151517;
+  --color-ink-4: #1d1d20;
+
+  /* Text */
+  --color-bone: #f2f0ea;
+  --color-ash: #a1a1a6;
+  --color-ash-dim: #8b8b90;
+
+  /* The single chromatic element. Hairlines, active underline, progress. */
+  --color-warm: #c2a878;
+
+  /* Hairlines */
+  --color-hair: rgba(242, 240, 234, 0.1);
+  --color-hair-strong: rgba(242, 240, 234, 0.2);
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-html {
-  scroll-behavior: smooth;
+/* ============================================================
+   BASE
+   ============================================================ */
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--color-ink);
+    color: var(--color-bone);
+    font-family: var(--font-sans);
+    min-height: 100vh;
+    overflow-x: clip;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Anchored sections must clear the fixed header */
+  section[id] {
+    scroll-margin-top: 6rem;
+  }
+
+  ::selection {
+    background-color: rgba(242, 240, 234, 0.18);
+    color: var(--color-bone);
+  }
+
+  :focus-visible {
+    outline: 1px solid var(--color-bone);
+    outline-offset: 3px;
+  }
+
+  /* Native controls default to black-on-white and break the palette */
+  input,
+  textarea,
+  button {
+    font: inherit;
+    color: inherit;
+  }
+
+  input::placeholder,
+  textarea::placeholder {
+    color: var(--color-ash-dim);
+  }
+
+  /* Autofill would otherwise paint a white block over dark fields */
+  input:-webkit-autofill,
+  textarea:-webkit-autofill {
+    -webkit-text-fill-color: var(--color-bone);
+    -webkit-box-shadow: 0 0 0 1000px var(--color-ink-3) inset;
+    caret-color: var(--color-bone);
+  }
+
+  ::-webkit-scrollbar {
+    width: 9px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--color-ink);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-ink-4);
+    border-radius: 999px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-ash-dim);
+  }
+
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-ink-4) var(--color-ink);
+  }
 }
 
-body {
-  background: linear-gradient(135deg, #000000 0%, var(--deep-blue) 50%, #000000 100%);
-  color: var(--foreground);
-  font-family: 'Space Grotesk', sans-serif;
-  min-height: 100vh;
-  overflow-x: hidden;
-}
-
-.glass {
-  background: rgba(255, 255, 255, 0.03);
-  backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-.glass:hover {
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-}
-
-.glass.scrolled {
-  background: rgba(10, 22, 40, 0.95);
-  backdrop-filter: blur(20px);
-  border-bottom: 1px solid rgba(0, 212, 255, 0.3);
-}
-
-.neon-glow {
-  box-shadow: 0 0 20px rgba(0, 212, 255, 0.3), 0 0 40px rgba(0, 212, 255, 0.1);
-}
-
-.neon-glow-purple {
-  box-shadow: 0 0 20px rgba(168, 85, 247, 0.3), 0 0 40px rgba(168, 85, 247, 0.1);
-}
-
-.text-glow {
-  text-shadow: 0 0 10px rgba(0, 212, 255, 0.5), 0 0 20px rgba(0, 212, 255, 0.3), 0 0 40px rgba(0, 212, 255, 0.1);
-}
-
-.text-glow-purple {
-  text-shadow: 0 0 10px rgba(168, 85, 247, 0.5), 0 0 20px rgba(168, 85, 247, 0.3);
-}
-
-.glowing-line {
-  background: linear-gradient(90deg, transparent, var(--neon-blue), transparent);
-  height: 1px;
-}
-
-.gradient-text {
-  background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.card-hover {
-  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-.card-hover:hover {
-  transform: translateY(-8px) scale(1.02);
-}
-
-.floating {
-  animation: floating 6s ease-in-out infinite;
-}
-
-@keyframes floating {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-20px); }
-}
-
-.pulse-glow {
-  animation: pulse-glow 2s ease-in-out infinite;
-}
-
-@keyframes pulse-glow {
-  0%, 100% { box-shadow: 0 0 20px rgba(0, 212, 255, 0.3); }
-  50% { box-shadow: 0 0 40px rgba(0, 212, 255, 0.6); }
-}
-
-.fade-in {
-  animation: fade-in 0.8s ease-out forwards;
-  opacity: 0;
-}
-
-@keyframes fade-in {
-  from { opacity: 0; transform: translateY(30px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.stagger-1 { animation-delay: 0.1s; }
-.stagger-2 { animation-delay: 0.2s; }
-.stagger-3 { animation-delay: 0.3s; }
-.stagger-4 { animation-delay: 0.4s; }
-.stagger-5 { animation-delay: 0.5s; }
-
-.abstract-shape {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(80px);
-  opacity: 0.4;
+/* ============================================================
+   TEXTURE
+   ============================================================ */
+@utility grain {
+  position: fixed;
+  inset: 0;
+  z-index: 70;
   pointer-events: none;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
-.scroll-indicator {
-  animation: bounce 2s infinite;
+@utility vignette {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    130% 90% at 50% 0%,
+    transparent 0%,
+    transparent 55%,
+    rgba(0, 0, 0, 0.45) 100%
+  );
 }
 
-@keyframes bounce {
-  0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-  40% { transform: translateY(-10px); }
-  60% { transform: translateY(-5px); }
+/* ============================================================
+   COMPONENT UTILITIES
+   ============================================================ */
+
+/* Small uppercase label above section titles */
+@utility eyebrow {
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--color-ash);
 }
 
-::-webkit-scrollbar {
-  width: 8px;
+/* Flat hairline surface — no glow, no backdrop tricks */
+@utility surface {
+  background-color: rgba(242, 240, 234, 0.015);
+  border: 1px solid var(--color-hair);
 }
 
-::-webkit-scrollbar-track {
-  background: #0a1628;
+/* Underline that wipes in from the left on hover */
+@utility link-wipe {
+  position: relative;
+}
+@utility link-wipe-after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -3px;
+  height: 1px;
+  width: 100%;
+  background-color: currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.45s var(--ease-out-expo);
 }
 
-::-webkit-scrollbar-thumb {
-  background: var(--neon-blue);
-  border-radius: 4px;
+/*
+  Header backdrop. Background + blur + bottom hairline are bundled into one
+  utility so the header can never render without them (it used to depend on a
+  `scrolled` flag and was fully transparent at rest).
+*/
+@utility header-surface {
+  background-color: rgba(11, 11, 12, 0.82);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--color-hair);
 }
 
-::-webkit-scrollbar-thumb:hover {
-  background: var(--neon-purple);
+/*
+  Outlined type for the oversized footer wordmark. The previous stroke sat at
+  18% white and was effectively invisible at display size.
+*/
+@utility text-stroke {
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(242, 240, 234, 0.3);
+}
+
+@utility text-stroke-bright {
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(242, 240, 234, 0.55);
+}
+
+/* Accessible visually-hidden helper */
+@utility sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* ============================================================
+   REACT-TOASTIFY — rethemed to match the palette
+   ============================================================ */
+.Toastify__toast {
+  border-radius: 0 !important;
+  border: 1px solid var(--color-hair-strong);
+  background: var(--color-ink-3) !important;
+  color: var(--color-bone) !important;
+  font-family: var(--font-sans) !important;
+  font-size: 0.875rem !important;
+  line-height: 1.5 !important;
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.7) !important;
+}
+
+.Toastify__toast-success {
+  border-left: 2px solid var(--color-bone) !important;
+}
+
+.Toastify__toast-error {
+  border-left: 2px solid #c4756a !important;
+}
+
+.Toastify__progress-bar {
+  background: var(--color-hair-strong) !important;
+}
+
+.Toastify__close-button {
+  color: var(--color-ash) !important;
+}
+
+/* ============================================================
+   REDUCED MOTION
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
 }
